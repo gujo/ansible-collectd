@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+
+LoadPlugin varnish
+
+<Plugin "varnish">
+  <Instance>
+    CollectCache       true
+    CollectConnections true
+    CollectBackend     true
+    CollectSHM         true
+    CollectESI         false
+    CollectFetch       false
+    CollectHCB         false
+    CollectSMA         false
+    CollectSMS         false
+    CollectSM          false
+    CollectTotals      false
+    CollectWorkers     false
+  </Instance>
+</Plugin>

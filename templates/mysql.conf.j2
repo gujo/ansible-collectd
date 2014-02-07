@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+
+LoadPlugin processes
+LoadPlugin tcpconns  
+LoadPlugin mysql
+
+<Plugin processes>
+	Process "java"
+</Plugin>
+
+<Plugin tcpconns>
+	ListeningPorts false
+	LocalPort "3306"
+</Plugin>
+ 
+<Plugin "mysql">
+    <Database "{{ collectd_mysql_database }}">
+        User "{{ collectd_mysql_user }}"
+        Password "{{ collectd_mysql_password }}"
+        Socket "/var/lib/mysql/mysql.sock"
+    {% if inventory_hostname == db_master %}
+	MasterStats true
+    {% else %}
+        SlaveNotifications true
+        SlaveStats true
+    {% endif %}
+    </Database>
+</Plugin>

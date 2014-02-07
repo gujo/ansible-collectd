@@ -1,0 +1,61 @@
+---
+
+- name: install collectd
+  yum: name=collectd state=present
+
+- name: write config file for collectd
+  template: src=collectd.conf.j2 dest=/etc/collectd.conf validate='collectd -t -C %s' owner=root group=root mode=0644
+  notify: restart collectd
+
+- name: enable collectd service
+  service: name=collectd state=started enabled=yes
+
+- name: copy logrotate config
+  copy: src=collectd.logrotate dest=/etc/logrotate.d/collectd owner=root group=root mode=0644
+
+- name: create /etc/collectd.d
+  file: name=/etc/collectd.d state=directory owner=root group=root mode=0644
+
+- name: create collectd.d placeholder conf file
+  template: src=placeholder.conf dest=/etc/collectd.d/placeholder.conf owner=root group=root mode=0644
+
+
+# write_graphite plugin
+
+- name: write config for write_graphite plugin
+  template: src=write_graphite.conf.j2 dest=/etc/collectd.d validate='collectd -t -C %s' owner=root group=root mode=0644
+  notify: restart collectd
+  when: "'write_graphite' in {{ extra_plugins }}"
+
+# MySQL plugin
+  
+- name: install mysql plugin
+  yum: name=collectd-mysql state=present
+  when: "'mysql' in {{ extra_plugins }}"
+  
+- name: write config for collectd mysql plugin
+  template: src=mysql.conf.j2 dest=/etc/collectd.d/mysql.conf validate='collectd -t -C %s' owner=root group=root mode=0644
+  notify: restart collectd
+  when: "'mysql' in {{ extra_plugins }}"
+
+# memcache plugin
+
+- name: install memcache plugin
+  yum: name=collectd-memcachec state=present
+  when: "'memcache' in {{ extra_plugins }}"
+
+- name: write config for collectd memcache plugin
+  template: src=memcache.conf.j2 dest=/etc/collectd.d/memcache.conf validate='collectd -t -C %s' owner=root group=root mode=0644
+  notify: restart collectd
+  when: "'memcache' in {{ extra_plugins }}"
+
+# Varnish plugin
+
+- name: install varnish plugin
+  yum: name=collectd-varnish state=present
+  when: "'varnish' in {{ extra_plugins }}"
+
+- name: write config for varnish plugin
+  template: src=varnish.conf.j2 dest=/etc/collectd.d/varnish.conf validate='collectd -t -C %s' owner=root group=root mode=0644
+  notify: restart collectd
+  when: "'varnish' in {{ extra_plugins }}"

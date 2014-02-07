@@ -1,0 +1,11 @@
+---
+
+extra_plugins:
+  - write_graphite
+  # - mysql
+  # - varnish
+  # - memcache
+
+  graphite_hostname: "graphite.example.com"
+  graphite_port: "2003"
+  graphite_host_environmant: "production"

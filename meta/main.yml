@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Johan Gunnarsson
+  description: Install collectd client
+  company: Gujops
+
+  platforms:
+    - name: EL
+      versions:
+        - 6
+
+  categories:
+    - monitoring
+    
