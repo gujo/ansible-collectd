@@ -25,6 +25,11 @@ collectd_mysql_user
 
 collectd_mysql_password
 
+TODO
+----
+
+Add more plugins
+
 Author
 ------
 
