@@ -1,6 +1,9 @@
 ansible-collectd
 ================
 
+[![Build Status](https://travis-ci.org/gujo/ansible-collectd.png?branch=master)](https://travis-ci.org/gujo/ansible-collectd)
+
+
 Install collectd and configure plugins
 
 Requirements
