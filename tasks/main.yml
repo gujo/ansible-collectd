@@ -11,7 +11,7 @@
   service: name=collectd state=started enabled=yes
 
 - name: copy logrotate config
-  copy: src=collectd.logrotate dest=/etc/logrotate.d/collectd owner=root group=root mode=0644
+  template: src=collectd.logrotate dest=/etc/logrotate.d/collectd owner=root group=root mode=0644
 
 - name: create /etc/collectd.d
   file: name=/etc/collectd.d state=directory owner=root group=root mode=0644

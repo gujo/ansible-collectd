@@ -1,8 +1,10 @@
+# {{ ansible_managed }}
+
 /var/log/collectd.log {
     daily
     missingok
     notifempty
-    rotate 5
+    rotate 7
     compress
     postrotate
         /bin/kill -HUP `cat /var/run/collectdmon.pid  2>/dev/null`  2> /dev/null || true
