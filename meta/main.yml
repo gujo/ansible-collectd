@@ -3,7 +3,8 @@ galaxy_info:
   author: Johan Gunnarsson
   description: Install collectd client
   company: Gujops
-
+  license: MIT
+  
   platforms:
     - name: EL
       versions:

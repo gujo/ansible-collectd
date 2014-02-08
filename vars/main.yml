@@ -1,17 +1,19 @@
 ---
 
+collectd_graphite_hostname: "graphite.example.com"
+collectd_graphite_port: "2003"
+collectd_graphite_host_environment: "production"
+
+  #collectd_mysql_database: database
+  #collectd_mysql_user: user
+  #collectd_mysql_password: password
+
+
 extra_plugins:
   - write_graphite
   # - mysql
   # - varnish
   # - memcache
 
-  collectd_graphite_hostname: "graphite.example.com"
-  collectd_graphite_port: "2003"
-  collectd_graphite_host_environmant: "production"
-
-  #collectd_mysql_database: database
-  #collectd_mysql_user: user
-  #collectd_mysql_password: password
 
   

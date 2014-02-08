@@ -1,5 +1,8 @@
 ---
 
+- name: install repo file for modern collectd on EL6
+  template: src=gujops-collectd.repo.j2 dest=/etc/yum/repos.d/gujops-collectd.repo owner=root group=root mode=0644
+
 - name: install collectd
   yum: name=collectd state=present
 

@@ -1,0 +1,14 @@
+---
+
+- name: test varnish role
+  hosts: all
+  sudo: yes
+  vars_files:
+    - 'vars/main.yml'
+    
+  tasks:
+    - include: 'tasks/main.yml'
+
+  handlers:
+    - include: 'handlers/main.yml'
+      
