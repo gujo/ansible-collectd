@@ -1,13 +1,10 @@
 # {{ ansible_managed }}
 
-
-LoadPlugin write_graphite
-
 <Plugin write_graphite>
   <Carbon>
-    Host "{{ graphite_hostname }}"
-    Port "{{ graphite_port }}"
-    Prefix "{{ graphite_host_environment }}."
+    Host "{{ collectd_graphite_hostname }}"
+    Port "{{ collectd_graphite_port }}"
+    Prefix "{{ collectd_graphite_host_environment }}."
     Postfix ".collectd"
     Protocol "tcp"
   </Carbon>
