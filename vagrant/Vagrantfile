@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "sl6-64-lyte"
+  config.vm.box_url = "http://lyte.id.au/vagrant/sl6-64-lyte.box"
+
+#  config.vm.box = "raring-server-cloudimg-amd64-vagrant"
+#  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.host_name = "vagrant"
+
+  config.vm.network :private_network, ip: "192.168.33.13"
+  
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "../role.yml"
+    ansible.inventory_path = "inventory"
+    ansible.host_key_checking = false
+#    ansible.extra_vars = {
+#      collectd_graphite_hostname: "localhost", 
+#      collectd_host_environment: "vagrant" }
+    ansible.verbose = "v"
+  end
+
+  config.vm.synced_folder "../vagrant", "/vagrant"
+
+end

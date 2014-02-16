@@ -1,7 +1,7 @@
 ---
 
 - name: install repo file for modern collectd on EL6
-  template: src=gujops-collectd.repo.j2 dest=/etc/yum/repos.d/gujops-collectd.repo owner=root group=root mode=0644
+  template: src=gujops-collectd.repo.j2 dest=/etc/yum.repos.d/gujops-collectd.repo owner=root group=root mode=0644
 
 - name: install collectd
   yum: name=collectd state=present
@@ -26,7 +26,7 @@
 # write_graphite plugin
 
 - name: write config for write_graphite plugin
-  template: src=write_graphite.conf.j2 dest=/etc/collectd.d validate='collectd -t -C %s' owner=root group=root mode=0644
+  template: src=write_graphite.conf.j2 dest=/etc/collectd.d/write_graphite.conf validate='collectd -t -C %s' owner=root group=root mode=0644
   notify: restart collectd
   when: "'write_graphite' in {{ extra_plugins }}"
 

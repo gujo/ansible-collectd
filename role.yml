@@ -1,6 +1,6 @@
 ---
 
-- name: test varnish role
+- name: test collectd role
   hosts: all
   sudo: yes
   vars_files:
