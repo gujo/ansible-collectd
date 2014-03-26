@@ -3,13 +3,25 @@
 - name: install repo file for modern collectd on EL6
   template: src=gujops-collectd.repo.j2 dest=/etc/yum.repos.d/gujops-collectd.repo owner=root group=root mode=0644
 
-- name: install collectd
+- name: install collectd (EL)
   yum: name=collectd state=present
+  when: ansible_os_family == "RedHat"
 
-- name: write config file for collectd
+- name: install collectd (Debian)
+  apt: name=collectd state=present
+  when: ansible_os_family == "Debian"
+  
+- name: write config file for collectd (non-debian)
   template: src=collectd.conf.j2 dest=/etc/collectd.conf validate='collectd -t -C %s' owner=root group=root mode=0644
   notify: restart collectd
+  when: ansible_os_family != "Debian"
 
+- name: write config file for collectd (debian)
+  template: src=collectd.conf.j2 dest=/etc/collectd/collectd.conf validate='/usr/sbin/collectd -t -C %s' owner=root group=root mode=06\
+  44
+  notify: restart collectd
+  when: ansible_os_family == "Debian"
+  
 - name: enable collectd service
   service: name=collectd state=started enabled=yes
 
