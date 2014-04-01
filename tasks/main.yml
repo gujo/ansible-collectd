@@ -2,6 +2,7 @@
 
 - name: install repo file for modern collectd on EL6
   template: src=gujops-collectd.repo.j2 dest=/etc/yum.repos.d/gujops-collectd.repo owner=root group=root mode=0644
+  when: ansible_os_family == "RedHat"
 
 - name: install collectd (EL)
   yum: name=collectd state=present
