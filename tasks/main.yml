@@ -74,3 +74,14 @@
   template: src=varnish.conf.j2 dest=/etc/collectd.d/varnish.conf validate='collectd -t -C %s' owner=root group=root mode=0644
   notify: restart collectd
   when: "'varnish' in {{ extra_plugins }}"
+
+# Nginx plugin
+
+- name: install nginx plugin
+  yum: name=collectd-nginx state=present
+  when: "'nginx' in {{ extra_plugins }}"
+
+- name: write config for nginx plugin
+  template: src=nginx.conf.j2 dest=/etc/collectd.d/nginx.conf validate='collectd -t -C %s' owner=root group=root mode=0644
+  notify: restart collectd
+  when: "'nginx' in {{ extra_plugins }}"
