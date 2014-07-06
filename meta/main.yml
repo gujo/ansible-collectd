@@ -10,7 +10,11 @@ galaxy_info:
       versions:
         - 6
     - name: Debian
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - trusty
         
   categories:
     - monitoring
-    
