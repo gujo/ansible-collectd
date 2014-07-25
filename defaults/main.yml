@@ -3,6 +3,7 @@
 collectd_graphite_hostname: "graphite.example.com"
 collectd_graphite_port: "2003"
 collectd_graphite_host_environment: "production"
+collectd_has_masterslave: false
 
   #collectd_mysql_database: database
   #collectd_mysql_user: user
