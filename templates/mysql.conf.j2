@@ -9,15 +9,24 @@ LoadPlugin mysql
 </Plugin>
  
 <Plugin "mysql">
-    <Database "{{ collectd_mysql_database }}">
-        User "{{ collectd_mysql_user }}"
-        Password "{{ collectd_mysql_password }}"
+{% for item in collectd_mysql %}
+    <Database "{{ item.database }}">
+        Database "{{ item.database }}"
+        User "{{ item.user }}"
+        Password "{{ item.password }}"
+{% if ansible_os_family == "Debian" %}
+        Socket "/var/run/mysqld/mysqld.sock"
+{% else %}
         Socket "/var/lib/mysql/mysql.sock"
-    {% if inventory_hostname == db_master %}
+{% endif %}
+{% if item.masterslave %}
+    {% if item.dbmaster is defined %}
 	MasterStats true
     {% else %}
         SlaveNotifications true
         SlaveStats true
     {% endif %}
+{% endif %}
     </Database>
+{% endfor %}
 </Plugin>

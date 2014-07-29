@@ -28,6 +28,10 @@ collectd_mysql_user
 
 collectd_mysql_password
 
+collectd_has_masterslave - set this to true to enable slave/master logging
+
+collectd_dbmaster - Define this variable on master hosts (if you have any)
+
 TODO
 ----
 

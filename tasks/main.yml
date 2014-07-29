@@ -46,7 +46,7 @@
   
 - name: install mysql plugin
   yum: name=collectd-mysql state=present
-  when: "'mysql' in {{ extra_plugins }}"
+  when: "'mysql' in {{ extra_plugins }} and ansible_os_family == 'RedHat'"
   
 - name: write config for collectd mysql plugin
   template: src=mysql.conf.j2 dest=/etc/collectd.d/mysql.conf validate='collectd -t -C %s' owner=root group=root mode=0644
