@@ -8,6 +8,11 @@
   yum: name=collectd state=present
   when: ansible_os_family == "RedHat"
 
+- name: write init file (EL)
+  template: src=collectd.j2 dest=/etc/init.d/collectd owner=root group=root mode=0755
+  notify: restart collectd
+  when: ansible_os_family == "RedHat"
+
 - name: install collectd (Debian)
   apt: name=collectd state=present
   when: ansible_os_family == "Debian"
