@@ -1,0 +1,42 @@
+---
+
+- name: collectd_common | enable collectd service
+  service: 
+     name=collectd
+     state=started 
+     enabled=yes
+
+- name: collectd_common | copy logrotate config
+  template: 
+     src=collectd.logrotate.j2 
+     dest=/etc/logrotate.d/collectd 
+     owner=root
+     group=root
+     mode=0644
+
+- name: collectd_common | create config plugins /etc/collectd/collectd.d
+  file: 
+     name="{{collectd_etc_plugins}}"
+     state=directory 
+     owner=root 
+     group=root 
+     mode=0644
+
+- name: collectd_common | create collectd.d placeholder conf file
+  template: 
+     src=placeholder.conf 
+     dest="{{collectd_etc_plugins}}/placeholder.conf"
+     owner=root 
+     group=root 
+     mode=0644
+
+- name: collectd_common | write config for write_graphite plugin
+  template: 
+     src=write_graphite.conf.j2 
+     dest="{{collectd_etc_plugins}}/write_graphite.conf "
+     validate='collectd -t -C %s' 
+     owner=root
+     group=root 
+     mode=0644
+  notify: restart collectd
+  when: "'write_graphite' in {{ extra_plugins }}"

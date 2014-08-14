@@ -1,9 +1,16 @@
 ---
 
-collectd_graphite_hostname: "graphite.example.com"
-collectd_graphite_port: "2003"
-collectd_graphite_host_environment: "production"
+collectd_graphite_hostname         : "graphite.example.com"
+collectd_graphite_port             : "2003"
+collectd_graphite_host_environment : "production"
+collectd_install                   : "binary" ## binary or source
+collectd_source_version            : "collectd-5.4.1"
+collectd_source_install            : /opt/collectd/
+collectd_etc                       : /etc/collectd
+collectd_etc_plugins               : /etc/collectd/collectd.d
 
+
+## Plugins Config
 collectd_mysql:
   - masterslave: false    # We have a slave/master setup
     dbmaster: false       # This host is a master
@@ -17,3 +24,4 @@ extra_plugins:
   # - varnish
   # - memcache
   # - nginx
+

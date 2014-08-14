@@ -1,0 +1,55 @@
+---
+- name: plugins_common | write config for write_graphite plugin
+  template: 
+     src=write_graphite.conf.j2 
+     dest="{{collectd_etc_plugins}}/write_graphite.conf"
+     validate='collectd -t -C %s' 
+     owner=root
+     group=root 
+     mode=0644
+  notify: restart collectd
+  when: "'write_graphite' in {{ extra_plugins }}"
+
+- name: plugins_common | write config for collectd mysql plugin
+  template: 
+     src=mysql.conf.j2
+     dest=/etc/collectd.d/mysql.conf 
+     validate='collectd -t -C %s' 
+     owner=root 
+     group=root 
+     mode=0644
+  notify: restart collectd
+  when: "'mysql' in {{ extra_plugins }}"
+
+- name: plugins_common | write config for collectd memcache plugin
+  template: 
+     src=memcache.conf.j2 
+     dest=/etc/collectd.d/memcache.conf 
+     validate='collectd -t -C %s' 
+     owner=root 
+     group=root 
+     mode=0644
+  notify: restart collectd
+  when: "'memcache' in {{ extra_plugins }}"
+
+- name: plugins_common | write config for varnish plugin
+  template: 
+    src=varnish.conf.j2 
+    dest=/etc/collectd.d/varnish.conf 
+    validate='collectd -t -C %s' 
+    owner=root 
+    group=root 
+    mode=0644
+  notify: restart collectd
+  when: "'varnish' in {{ extra_plugins }}"
+
+- name: plugins_common | write config for nginx plugin
+  template: 
+    src=nginx.conf.j2 
+    dest=/etc/collectd.d/nginx.conf 
+    validate='collectd -t -C %s'
+    owner=root
+    group=root
+    mode=0644
+  notify: restart collectd
+  when: "'nginx' in {{ extra_plugins }}"

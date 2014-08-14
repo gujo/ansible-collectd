@@ -1,0 +1,16 @@
+---
+
+- name: install collectd (Debian)
+  apt: 
+    name=collectd 
+    state=present
+
+- name: write config file for collectd (debian)
+  template: 
+     src=collectd.conf.j2 
+     dest=/etc/collectd/collectd.conf 
+     validate='/usr/sbin/collectd -t -C %s' 
+     owner=root 
+     group=root 
+     mode=0644
+  notify: restart collectd
