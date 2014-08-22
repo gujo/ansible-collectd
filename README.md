@@ -40,5 +40,11 @@ Add more plugins
 Author
 ------
 
-Orignal : Johan Gunnarsson <jgunnarsson@gmail.com>
+Johan Gunnarsson <jgunnarsson@gmail.com>
+
+Contributors:
+
+Stefan Berggren
+
 Adham Helal
+
