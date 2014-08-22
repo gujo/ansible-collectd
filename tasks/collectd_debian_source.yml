@@ -1,0 +1,56 @@
+---
+
+#curl build-essential 
+
+## http://git.verplant.org/?p=collectd.git;a=blob;hb=master;f=README
+- name: debian_source | install build-essential and package
+  apt: 
+    name="{{item}}"
+    state=present
+  with_items:
+    - build-essential 
+    - libcurl4-openssl-dev
+    - libpcap-dev
+    - librrd-dev
+
+- name: Download collectd (Debian source)
+  get_url:
+    url="http://collectd.org/files/{{collectd_source_version}}.tar.gz"
+    dest=/usr/src
+
+- name: debian_source | Build collectd from source 
+  shell:
+    cd /usr/src/ && tar xvf {{collectd_source_version}}.tar.gz && cd {{collectd_source_version}}/ && ./configure && make clean &&  make all install
+  args:
+    creates: "{{collectd_source_install}}"
+
+- name: debian_source | symlink /etc/collectd
+  file:
+     src="{{collectd_source_install}}/etc/"
+     dest="{{collectd_etc}}"
+     state="link"
+
+- name: debian_source | symlink <source sbin>/collectd
+  file:
+     src="{{collectd_source_install}}/sbin/collectd"
+     dest="/usr/sbin/collectd"
+     state="link"
+
+- name: debian_source |  write config file for collectd 
+  template: 
+     src=collectd.conf.j2 
+     dest="{{collectd_etc}}/collectd.conf"
+     validate='collectd -t -C %s' 
+     owner=root 
+     group=root 
+     mode=0644
+  notify: restart collectd
+
+- name: debian_source | write init file
+  template: 
+     src=collectd_debian_source.j2
+     dest=/etc/init.d/collectd 
+     owner=root
+     group=root 
+     mode=0755
+  notify: restart collectd
