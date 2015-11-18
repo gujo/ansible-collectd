@@ -20,7 +20,7 @@
      state=directory 
      owner=root 
      group=root 
-     mode=0644
+     mode=0755
 
 - name: collectd_common | create collectd.d placeholder conf file
   template: 
